@@ -10,8 +10,6 @@
 
 > 42 School project implementing the classic synchronization problem.
 
-![Dining Philosophers](https://upload.wikimedia.org/wikipedia/commons/7/7b/Dining_philosophers_problem.png)
-
 ---
 
 ## 📚 Description
