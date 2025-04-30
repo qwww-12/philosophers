@@ -6,7 +6,7 @@
 /*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:36:25 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/04/26 12:44:41 by mbarhoun         ###   ########.fr       */
+/*   Updated: 2025/04/27 14:01:42 by mbarhoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ void	log_action(t_philo *philo, char *msg)
 	pthread_mutex_unlock(&philo->info->lock_write);
 }
 
-void	ft_usleep(t_long time)
+void	ft_usleep(t_long time, t_info *info)
 {
 	t_long	t0;
 	t_long	t1;
 
 	t0 = get_time();
-	while (1)
+	while (info->death_flag == 0)
 	{
 		t1 = get_time();
 		if (t1 - t0 >= time)

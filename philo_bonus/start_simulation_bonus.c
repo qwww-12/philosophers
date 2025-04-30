@@ -6,21 +6,11 @@
 /*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:53:00 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/04/26 14:48:07 by mbarhoun         ###   ########.fr       */
+/*   Updated: 2025/04/30 16:26:03 by mbarhoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
-
-static void	delete_process(t_info *info, pid_t pid)
-{
-	int	i;
-
-	i = -1;
-	while (++i < info->nb_philo)
-		if (info->pids[i] != pid && info->pids[i] > 0)
-			kill(info->pids[i], SIGKILL);
-}
 
 static void	wait_philos(t_info *info)
 {
@@ -37,8 +27,7 @@ static void	wait_philos(t_info *info)
 			if (wait1.code == 1)
 			{
 				delete_process(info, wait1.pid);
-				sem_post(info->sem_death);
-				sem_post(info->sem_write);
+				semaphore_post(info);
 				return ;
 			}
 			else if (wait1.code == 42)
@@ -74,9 +63,9 @@ static void	actions(t_philo *philo)
 		ft_usleep(1);
 	while (!restart_action(philo))
 	{
+		think(philo);
 		eat(philo);
 		slumber(philo);
-		think(philo);
 	}
 }
 
@@ -95,26 +84,23 @@ static void	set_time(t_info *info)
 void	start_simulation(t_info *info)
 {
 	int	i;
-	int	rt_fork;
 
 	i = -1;
-	rt_fork = -2;
 	set_time(info);
 	while (++i < info->nb_philo)
 	{
-		rt_fork = fork();
-		if (rt_fork > 0)
-			info->pids[i] = rt_fork;
-		else if (rt_fork == 0)
+		info->pids[i] = fork();
+		if (info->pids[i] == 0)
 		{
 			actions(&info->philo[i]);
 			exit(2);
 		}
-		else if (rt_fork == -1)
+		else if (info->pids[i] == -1)
 		{
 			printf(ERR_FRK);
 			exit(1);
 		}
+		usleep(100);
 	}
 	wait_philos(info);
 }

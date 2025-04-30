@@ -1,6 +1,6 @@
 CC = cc
 
-# CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 SRC =	philo_bonus.c				\
 		parsing_bonus.c				\
@@ -9,6 +9,7 @@ SRC =	philo_bonus.c				\
 		start_simulation_bonus.c	\
 		reaper_eye_bonus.c			\
 		utils_bonus.c				\
+		write_status_bonus.c		\
 
 OBJ = $(SRC:.c=.o)
 

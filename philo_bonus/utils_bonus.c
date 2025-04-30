@@ -6,7 +6,7 @@
 /*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 11:37:12 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/04/26 14:53:19 by mbarhoun         ###   ########.fr       */
+/*   Updated: 2025/04/30 10:49:25 by mbarhoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,6 @@ t_long	get_time(void)
 	if (gettimeofday(&tv, NULL) == -1)
 		return (printf(ERR_TIM), 0);
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-}
-
-void	log_action(t_philo *philo, char *msg)
-{
-	t_long	time;
-
-	sem_wait(philo->info->sem_write);
-	time = get_time() - philo->t0;
-	printf("%lld %d %s\n", time, philo->pos, msg);
-	sem_post(philo->info->sem_write);
 }
 
 void	ft_usleep(t_long time)
@@ -46,21 +36,29 @@ void	ft_usleep(t_long time)
 	}
 }
 
-void	destroy_sem(t_info *info)
+void	ready_to_finish(t_info *info)
 {
 	sem_close(info->forks);
 	sem_close(info->sem_eat);
 	sem_close(info->sem_write);
 	sem_close(info->sem_death);
-	sem_unlink("/sem_forks");
-	sem_unlink("/sem_eat");
-	sem_unlink("/sem_write");
-	sem_unlink("/sem_death");
-}
-
-void	ready_to_finish(t_info *info)
-{
-	destroy_sem(info);
 	free(info->philo);
 	free(info->pids);
+}
+
+void	semaphore_post(t_info *info)
+{
+	sem_post(info->sem_death);
+	sem_post(info->sem_write);
+	sem_post(info->sem_eat);
+}
+
+void	delete_process(t_info *info, pid_t pid)
+{
+	int	i;
+
+	i = -1;
+	while (++i < info->nb_philo)
+		if (info->pids[i] != pid && info->pids[i] > 0)
+			kill(info->pids[i], SIGKILL);
 }

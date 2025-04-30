@@ -6,7 +6,7 @@
 /*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:36:31 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/04/26 11:15:13 by mbarhoun         ###   ########.fr       */
+/*   Updated: 2025/04/30 18:58:26 by mbarhoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		philo_start_dining(t_info *info);
 t_long	get_time(void);
 int		crash(char *msg, t_info *info);
 void	log_action(t_philo *philo, char *msg);
-void	ft_usleep(t_long time);
+void	ft_usleep(t_long time, t_info *info);
 void	ready_to_finish(t_info *info);
 /*~~~~~~~~~~~~~~~~~~~~~~~ watcher.c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 void	*reaper_eye(void *arg);

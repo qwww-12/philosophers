@@ -6,7 +6,7 @@
 /*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:36:28 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/04/26 12:44:13 by mbarhoun         ###   ########.fr       */
+/*   Updated: 2025/04/27 14:56:03 by mbarhoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,17 @@
 
 static int	valid_action(t_philo *philo, bool condition)
 {
+	int	status;
+
+	status = 0;
 	if (condition == 0)
-		return ((int)philo->info->death_flag);
+	{
+		pthread_mutex_lock(&philo->info->lock_death);
+		if (philo->info->death_flag == 1)
+			status = 1;
+		pthread_mutex_unlock(&philo->info->lock_death);
+		return (status);
+	}
 	else
 	{
 		if (philo->info->n_meals < 0)
@@ -34,13 +43,13 @@ void	*philosophers(void *arg)
 		return (NULL);
 	philo = (t_philo *)arg;
 	if (philo->pos % 2 == 0)
-		ft_usleep(1);
+		ft_usleep(1, philo->info);
 	while (!valid_action(philo, 0) && !valid_action(philo, 1))
 	{
+		think(philo);
 		if (!eat(philo))
 			return (NULL);
 		slumber(philo);
-		think(philo);
 	}
 	return (NULL);
 }

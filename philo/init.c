@@ -6,7 +6,7 @@
 /*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:36:49 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/04/26 10:18:45 by mbarhoun         ###   ########.fr       */
+/*   Updated: 2025/04/30 18:57:13 by mbarhoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,15 @@ int	global_init(t_info *info)
 	if (pthread_mutex_init(&info->lock_eat, NULL))
 		return (crash(ERR_MTX, info));
 	if (pthread_mutex_init(&info->lock_death, NULL))
+	{
+		pthread_mutex_destroy(&info->lock_eat);
 		return (crash(ERR_MTX, info));
+	}
 	if (pthread_mutex_init(&info->lock_write, NULL))
+	{
+		pthread_mutex_destroy(&info->lock_eat);
+		pthread_mutex_destroy(&info->lock_death);
 		return (crash(ERR_MTX, info));
+	}
 	return (1);
 }

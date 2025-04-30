@@ -6,7 +6,7 @@
 /*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 09:43:08 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/04/22 10:23:40 by mbarhoun         ###   ########.fr       */
+/*   Updated: 2025/04/28 14:41:54 by mbarhoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ static int	philo_arguments(t_info *info, int ac, char **av)
 			return (printf(ERR_NBR), 0);
 		}
 	}
-	if (ent_arg[0] > 200)
-		return (printf(ERR_MAX), free(ent_arg), 0);
 	if (!find_zero(ent_arg, ac))
 		return (0);
 	return (set_philo_arguments(info, ent_arg, ac));

@@ -6,7 +6,7 @@
 /*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 08:14:14 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/04/26 15:22:17 by mbarhoun         ###   ########.fr       */
+/*   Updated: 2025/04/30 09:58:58 by mbarhoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ static int	timer_of_death(t_philo *philo)
 	if (time - philo->t1 >= philo->info->tt_die)
 	{
 		sem_wait(philo->info->sem_death);
-		log_action(philo, "died");
-		sem_post(philo->info->sem_eat);
+		sem_wait(philo->info->sem_write);
+		printf("%lld %d died\n", time - philo->t0, philo->pos);
 		exit (1);
 	}
 	sem_post(philo->info->sem_eat);

@@ -6,7 +6,7 @@
 /*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 11:27:23 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/04/26 12:50:38 by mbarhoun         ###   ########.fr       */
+/*   Updated: 2025/04/30 15:36:12 by mbarhoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ static int	create_semaphore(t_info *info)
 	sem_unlink("/sem_death");
 	sem_unlink("/sem_eat");
 	sem_unlink("/sem_write");
-	info->forks = sem_open("/sem_forks", O_CREAT, 0777, info->nb_philo);
-	info->sem_eat = sem_open("/sem_eat", O_CREAT, 0777, 1);
-	info->sem_write = sem_open("/sem_write", O_CREAT, 0777, 1);
-	info->sem_death = sem_open("/sem_death", O_CREAT, 0777, 1);
+	info->forks = sem_open("/sem_forks", O_CREAT, 0644, info->nb_philo);
+	info->sem_eat = sem_open("/sem_eat", O_CREAT, 0644, 1);
+	info->sem_write = sem_open("/sem_write", O_CREAT, 0644, 1);
+	info->sem_death = sem_open("/sem_death", O_CREAT, 0644, 1);
 	if (info->forks == SEM_FAILED || info->sem_eat == SEM_FAILED 
-		|| info->sem_write == SEM_FAILED|| info->sem_death == SEM_FAILED)
+		|| info->sem_write == SEM_FAILED || info->sem_death == SEM_FAILED)
 		return (printf(ERR_SEM), 0);
 	return (1);
 }
@@ -37,8 +37,6 @@ static void	philo_init(t_info *info)
 	{
 		info->philo[i].pos = i + 1;
 		info->philo[i].e_counter = 0;
-		info->philo[i].not_write = 0;
-		info->philo[i].death_flag = 0;
 		info->philo[i].info = info;
 	}
 }
@@ -55,7 +53,6 @@ int	global_init(t_info *info)
 		return (printf(ERR_MEM), 0);
 	}
 	info->death_flag = 0;
-	info->main_pid = getpid();
 	philo_init(info);
 	if (!create_semaphore(info))
 	{
