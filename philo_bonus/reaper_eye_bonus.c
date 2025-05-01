@@ -14,9 +14,6 @@
 
 static int	check_e_counter(t_philo *philo)
 {
-	int	i;
-
-	i = 0;
 	if (philo->info->n_meals == -1)
 		return (1);
 	sem_wait(philo->info->sem_eat);
