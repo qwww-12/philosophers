@@ -6,7 +6,7 @@
 /*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:53:00 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/04/30 16:26:03 by mbarhoun         ###   ########.fr       */
+/*   Updated: 2025/05/04 18:26:23 by mbarhoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static void	wait_philos(t_info *info)
 			if (wait1.code == 1)
 			{
 				delete_process(info, wait1.pid);
-				semaphore_post(info);
 				return ;
 			}
 			else if (wait1.code == 42)
@@ -40,32 +39,16 @@ static void	wait_philos(t_info *info)
 	}
 }
 
-static int	restart_action(t_philo *philo)
-{
-	if (philo->info->n_meals == -1)
-		return (0);
-	if (philo->e_counter < philo->info->n_meals)
-		return (0);
-	return (1);
-}
-
 static void	actions(t_philo *philo)
 {
-	pthread_t	observ;
-
-	if (pthread_create(&observ, NULL, reaper_eye, philo))
-	{
-		printf(ERR_PTH);
-		exit(1);
-	}
-	pthread_detach(observ);
 	if (philo->pos % 2 == 0)
-		ft_usleep(1);
-	while (!restart_action(philo))
+		ft_usleep(philo->info->tt_eat / 2);
+	while (1)
 	{
 		think(philo);
 		eat(philo);
 		slumber(philo);
+		usleep(500);
 	}
 }
 
@@ -92,6 +75,9 @@ void	start_simulation(t_info *info)
 		info->pids[i] = fork();
 		if (info->pids[i] == 0)
 		{
+			pthread_create(&info->philo[i].observe, NULL, \
+			reaper_eye, &info->philo[i]);
+			pthread_detach(info->philo[i].observe);
 			actions(&info->philo[i]);
 			exit(2);
 		}
@@ -100,7 +86,6 @@ void	start_simulation(t_info *info)
 			printf(ERR_FRK);
 			exit(1);
 		}
-		usleep(100);
 	}
 	wait_philos(info);
 }

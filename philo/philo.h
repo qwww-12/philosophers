@@ -6,7 +6,7 @@
 /*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:36:31 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/04/30 18:58:26 by mbarhoun         ###   ########.fr       */
+/*   Updated: 2025/05/04 17:13:25 by mbarhoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	unlock_mutex(t_info *info);
 int		global_init(t_info *info);
 /*~~~~~~~~~~~~~~~~~~~~ strat_feats.c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 int		philo_start_dining(t_info *info);
+int		valid_action(t_philo *philo, bool condition);
 /*~~~~~~~~~~~~~~~~~~~~~~~ utils.c ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 t_long	get_time(void);
 int		crash(char *msg, t_info *info);

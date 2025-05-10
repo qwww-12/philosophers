@@ -6,7 +6,7 @@
 /*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 11:27:23 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/04/30 15:36:12 by mbarhoun         ###   ########.fr       */
+/*   Updated: 2025/05/04 17:18:12 by mbarhoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ static void	philo_init(t_info *info)
 	i = -1;
 	while (++i < info->nb_philo)
 	{
+		info->philo[i].rsleep = 500;
+		if (info->nb_philo == 1)
+			info->philo[i].rsleep = 0;
 		info->philo[i].pos = i + 1;
 		info->philo[i].e_counter = 0;
 		info->philo[i].info = info;

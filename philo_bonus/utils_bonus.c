@@ -6,7 +6,7 @@
 /*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 11:37:12 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/04/30 10:49:25 by mbarhoun         ###   ########.fr       */
+/*   Updated: 2025/05/04 18:22:12 by mbarhoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_usleep(t_long time)
 		t1 = get_time();
 		if (t1 - t0 >= time)
 			return ;
-		usleep(100);
+		usleep(500);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:36:25 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/04/27 14:01:42 by mbarhoun         ###   ########.fr       */
+/*   Updated: 2025/05/03 12:45:50 by mbarhoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	log_action(t_philo *philo, char *msg)
 
 	pthread_mutex_lock(&philo->info->lock_write);
 	time = get_time() - philo->t0;
-	if (!philo->info->death_flag)
+	if (!valid_action(philo, 0))
 		printf("%lld %d %s\n", time, philo->pos, msg);
 	pthread_mutex_unlock(&philo->info->lock_write);
 }
@@ -56,12 +56,12 @@ void	ft_usleep(t_long time, t_info *info)
 	t_long	t1;
 
 	t0 = get_time();
-	while (info->death_flag == 0)
+	while (!valid_action(info->philo, 0))
 	{
 		t1 = get_time();
 		if (t1 - t0 >= time)
 			return ;
-		usleep(100);
+		usleep(400);
 	}
 }
 

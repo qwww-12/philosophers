@@ -6,7 +6,7 @@
 /*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 08:29:37 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/04/30 10:46:59 by mbarhoun         ###   ########.fr       */
+/*   Updated: 2025/05/04 18:22:28 by mbarhoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	*reaper_eye(void *arg);
 void	eat(t_philo *philo);
 void	think(t_philo *philo);
 void	slumber(t_philo *philo);
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*~~~~~~~~~~~~~~~~~~~ write_status_bonus.c ~~~~~~~~~~~~~~~~~*/
 void	write_status(t_philo *philo, char *p_str);
 
 typedef struct s_info
@@ -75,11 +75,13 @@ typedef struct s_info
 
 typedef struct s_philo
 {
-	int		pos;
-	int		e_counter;
-	t_long	t0;
-	t_long	t1;
-	t_info	*info;
+	int			pos;
+	int			e_counter;
+	useconds_t	rsleep;
+	t_long		t0;
+	t_long		t1;
+	t_info		*info;
+	pthread_t	observe;
 }	t_philo;
 
 typedef struct s_wait

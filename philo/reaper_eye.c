@@ -6,7 +6,7 @@
 /*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:36:22 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/04/28 14:51:43 by mbarhoun         ###   ########.fr       */
+/*   Updated: 2025/05/04 16:55:24 by mbarhoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ static int	timer_of_death(t_philo *philo)
 	bool		status;
 
 	pthread_mutex_lock(&philo->info->lock_eat);
-	t2 = get_time();
-	status = 0;
-	if (t2 - philo->t1 >= philo->info->tt_die)
-		status = 1;
+	t2 = get_time() - philo->t1;
 	pthread_mutex_unlock(&philo->info->lock_eat);
+	status = 0;
+	if (t2 >= philo->info->tt_die)
+		status = 1;
 	return (status);
 }
 
@@ -41,6 +41,7 @@ static int	observe_death(t_philo *philo)
 			pthread_mutex_unlock(&philo->info->lock_death);
 			return (1);
 		}
+		usleep(100);
 	}
 	return (0);
 }
@@ -61,6 +62,7 @@ static int	check_e_counter(t_philo *philo)
 			full++;
 		pthread_mutex_unlock(&philo[0].info->lock_eat);
 		i++;
+		usleep(100);
 	}
 	if (full == philo[0].info->nb_philo)
 	{

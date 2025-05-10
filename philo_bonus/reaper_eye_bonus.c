@@ -6,7 +6,7 @@
 /*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 08:14:14 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/04/30 09:58:58 by mbarhoun         ###   ########.fr       */
+/*   Updated: 2025/05/04 18:25:27 by mbarhoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ void	*reaper_eye(void *arg)
 
 	philo = (t_philo *)arg;
 	while (1)
+	{
 		if (!timer_of_death(philo) || !check_e_counter(philo))
 			break ;
+		usleep(philo->rsleep);
+	}
 	return (arg);
 }

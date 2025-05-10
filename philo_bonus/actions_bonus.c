@@ -6,7 +6,7 @@
 /*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 20:05:40 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/04/30 08:05:13 by mbarhoun         ###   ########.fr       */
+/*   Updated: 2025/05/04 18:22:47 by mbarhoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ void	eat(t_philo *philo)
 	sem_wait(philo->info->forks);
 	write_status(philo, " has taken a fork\n");
 	write_status(philo, " is eating\n");
-	ft_usleep(philo->info->tt_eat);
 	sem_wait(philo->info->sem_eat);
 	philo->t1 = get_time();
-	philo->e_counter++;
 	sem_post(philo->info->sem_eat);
+	ft_usleep(philo->info->tt_eat);
+	philo->e_counter++;
 	sem_post(philo->info->forks);
 	sem_post(philo->info->forks);
 }

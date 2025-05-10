@@ -6,13 +6,13 @@
 /*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:36:28 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/04/27 14:56:03 by mbarhoun         ###   ########.fr       */
+/*   Updated: 2025/05/03 12:11:17 by mbarhoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	valid_action(t_philo *philo, bool condition)
+int	valid_action(t_philo *philo, bool condition)
 {
 	int	status;
 
@@ -43,7 +43,7 @@ void	*philosophers(void *arg)
 		return (NULL);
 	philo = (t_philo *)arg;
 	if (philo->pos % 2 == 0)
-		ft_usleep(1, philo->info);
+		ft_usleep(philo->info->tt_eat / 2, philo->info);
 	while (!valid_action(philo, 0) && !valid_action(philo, 1))
 	{
 		think(philo);
